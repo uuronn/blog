@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export default function Home() {
   useEffect(() => {
     (async () => {
-      const test = await fetch("http://localhost:3000/cats");
+      const test = await fetch("http://localhost:3000/blogs");
       const cat = await test.json();
       console.log("aaa", cat);
     })();
