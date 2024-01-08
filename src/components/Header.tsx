@@ -4,10 +4,10 @@ type Props = {
 
 export const Header = ({ breadcrumbList }: Props) => {
   return (
-    <header className="fixed z-10 w-screen border-b-2 border-black bg-white px-6 py-3">
+    <header className="z-10 w-screen border-b-2 border-black bg-white px-6 py-3">
       <ul className="flex">
         {breadcrumbList.map((breadcrumb, i) => (
-          <li className="text-lg" key={i}>
+          <li className="text-lg text-black" key={i}>
             <a href={breadcrumb.path} className="text-lg font-bold">
               {breadcrumb.title}
             </a>
