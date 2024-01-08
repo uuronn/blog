@@ -3,13 +3,26 @@
 import { FormEventHandler } from "react";
 
 export default function Create() {
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const title = form.get("title") || "";
     const content = form.get("content") || "";
-    console.log("title", title);
-    console.log("content", content);
+
+    const res = await fetch("http://localhost:8000/blogs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        content,
+      }),
+    });
+
+    const blog = await res.json();
+
+    console.log("blog", blog);
   };
 
   return (

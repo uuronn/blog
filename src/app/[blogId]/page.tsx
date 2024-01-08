@@ -9,10 +9,8 @@ export default function Blog() {
   const router = useParams();
 
   useEffect(() => {
-    console.log(`http://localhost:3000/blogs/${router.blogId}`);
-
     (async () => {
-      const res = await fetch(`http://localhost:3000/blogs/${router.blogId}`);
+      const res = await fetch(`http://localhost:8000/blogs/${router.blogId}`);
       const blog: Blog = await res.json();
       setBlog(blog);
       console.log("blog", blog);
