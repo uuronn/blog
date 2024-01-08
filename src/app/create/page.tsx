@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEventHandler } from "react";
+import { Header } from "~/components/Header";
 
 export default function Create() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -20,22 +21,32 @@ export default function Create() {
       }),
     });
 
-    const blog = await res.json();
-
-    console.log("blog", blog);
+    if (res.ok) {
+      console.log("create successfully");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        タイトル
-        <input name="title" className="rounded border-2" type="text" />
-      </label>
-      <label>
-        内容
-        <textarea name="content" className="rounded border-2" />
-      </label>
-      <button>送信</button>
-    </form>
+    <>
+      <Header
+        breadcrumbList={[
+          { title: "いっせいブログ", path: "/" },
+          { title: "作成", path: "" },
+        ]}
+      />
+      <main>
+        <form onSubmit={handleSubmit}>
+          <label>
+            タイトル
+            <input name="title" className="rounded border-2" type="text" />
+          </label>
+          <label>
+            内容
+            <textarea name="content" className="rounded border-2" />
+          </label>
+          <button>送信</button>
+        </form>
+      </main>
+    </>
   );
 }
