@@ -5,25 +5,16 @@ import { useContext, useEffect, useState } from 'react';
 import { Header } from '~/components/Header';
 import { BlogCard } from './components/BlogCard';
 import { AuthContext } from '~/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
-import { auth } from '~/firebase/app';
 import { BASE_URL } from '~/constant';
-
-export type Blog = {
-  id: string;
-  title: string;
-  content: string;
-};
+import { Blog } from '~/constant/types';
 
 export default function Home() {
   const [blogs, setBlogs] = useState<Blog[]>();
   const { authUser, isLoad } = useContext(AuthContext);
-  const router = useRouter();
+
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const user = auth.currentUser;
-
     if (authUser) {
       console.log('authUser', authUser.uid);
 
@@ -95,7 +86,7 @@ export default function Home() {
         <ul className="flex flex-wrap justify-center gap-3">
           {blogs.map((blog) => (
             <li key={blog.id}>
-              <Link href={blog.id}>
+              <Link href={`/blogs/${blog.id}`}>
                 <BlogCard blog={blog} />
               </Link>
             </li>

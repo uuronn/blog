@@ -13,6 +13,7 @@ export default function Create() {
     const res = await fetch(`${BASE_URL}/blogs`, {
       method: 'POST',
       headers: {
+        Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
