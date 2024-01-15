@@ -4,6 +4,7 @@ import { Header } from '~/components/Header';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { auth } from '~/firebase/app';
+import { BASE_URL } from '~/constant';
 
 export type Blog = {
   id: string;
@@ -19,7 +20,7 @@ export default function Home() {
 
     const userId = res.user.uid;
 
-    await fetch('http://localhost:8000/users', {
+    await fetch(`${BASE_URL}/users`, {
       method: 'POST',
       headers: {
         Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,

@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Blog } from "../page";
-import { Header } from "~/components/Header";
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Blog } from '../page';
+import { Header } from '~/components/Header';
+import { BASE_URL } from '~/constant';
 
 export default function Blog() {
   const [blog, setBlog] = useState<Blog>();
@@ -11,7 +12,7 @@ export default function Blog() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:8000/blogs/${router.blogId}`);
+      const res = await fetch(`${BASE_URL}/blogs/${router.blogId}`);
       const blog: Blog = await res.json();
       setBlog(blog);
     })();
@@ -23,8 +24,8 @@ export default function Blog() {
     <div color="text-red">
       <Header
         breadcrumbList={[
-          { title: "いっせいブログ", path: "/" },
-          { title: blog.title, path: "" },
+          { title: 'いっせいブログ', path: '/' },
+          { title: blog.title, path: '' },
         ]}
       />
       <h1>{blog.title}</h1>
