@@ -5,6 +5,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { auth } from '~/firebase/app';
 import { BASE_URL } from '~/constant';
+import { User } from '~/constant/types';
 
 export type Blog = {
   id: string;
@@ -19,6 +20,8 @@ export default function Home() {
     const res = await signInWithPopup(auth, provider);
 
     const userId = res.user.uid;
+    const name = res.user.displayName || '';
+    const email = res.user.email || '';
 
     await fetch(`${BASE_URL}/users`, {
       method: 'POST',
@@ -26,7 +29,7 @@ export default function Home() {
         Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ userId, name, email } as User),
     });
   };
 
