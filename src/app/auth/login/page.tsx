@@ -14,25 +14,19 @@ export type Blog = {
 export default function Home() {
   const provider = new GoogleAuthProvider();
 
-  const onClick = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        const user = result.user;
-        const userId = user.uid;
+  const onClick = async () => {
+    const res = await signInWithPopup(auth, provider);
 
-        fetch('http://localhost:8000/users', {
-          method: 'POST',
-          headers: {
-            Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
-          },
-          body: JSON.stringify(userId),
-        });
-      })
-      .catch((e) => {
-        console.log('error', e);
-      });
+    const userId = res.user.uid;
+
+    await fetch('http://localhost:8000/users', {
+      method: 'POST',
+      headers: {
+        Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
+    });
   };
 
   return (
