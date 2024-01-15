@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ComponentPropsWithoutRef } from 'react';
-import { Blog } from '~/app/page';
+import { Blog } from '~/constant/types';
 
 type Props = {
   blog: Blog;
