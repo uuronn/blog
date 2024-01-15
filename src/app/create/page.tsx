@@ -2,6 +2,7 @@
 
 import { FormEventHandler } from 'react';
 import { BASE_URL } from '~/constant';
+import { Button } from '../components/Button';
 
 export default function Create() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -21,23 +22,31 @@ export default function Create() {
         content,
       }),
     });
+
     if (res.ok) {
-      console.log('create successfully');
+      alert('記事作成できました');
     }
   };
 
   return (
-    <main>
-      <form onSubmit={handleSubmit}>
+    <main className="mx-auto mt-20 max-w-7xl px-8">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
         <label>
           タイトル
-          <input name="title" className="rounded border-2" type="text" />
+          <input name="title" className="w-full rounded border-2" type="text" />
         </label>
         <label>
           内容
-          <textarea name="content" className="rounded border-2" />
+          <textarea
+            name="content"
+            rows={8}
+            className="w-full rounded border-2"
+          />
         </label>
-        <button>送信</button>
+        <div className="m-auto flex gap-6">
+          <Button>送信</Button>
+          <Button>下書き</Button>
+        </div>
       </form>
     </main>
   );
