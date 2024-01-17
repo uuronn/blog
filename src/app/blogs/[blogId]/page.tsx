@@ -6,16 +6,15 @@ import { Blog } from '~/constant/types';
 import { Header } from '~/components/Header';
 import { BASE_URL } from '~/constant';
 import { AuthContext } from '~/contexts/AuthContext';
-import { useFetchLikesCount } from '~/hooks/useFetchLikesCount';
 import { getIdToken } from 'firebase/auth';
+import { LikeIcon } from '~/components/icons/LikeIcon';
 
 export default function Blog() {
   const [blog, setBlog] = useState<Blog>();
   const router = useParams();
   const { authUser, isLoad } = useContext(AuthContext);
   const [count, setCount] = useState(0);
-
-  // const count = useFetchLikesCount(router.blogId as string);
+  const [isLike, setIsLike] = useState(false);
 
   const likeHandler = async () => {
     const userId = authUser?.uid;
@@ -30,6 +29,7 @@ export default function Blog() {
     const count = await res.json();
 
     setCount(count);
+    setIsLike(true);
   };
 
   useEffect(() => {
@@ -41,6 +41,9 @@ export default function Blog() {
         });
         const blog: Blog = await res.json();
         setBlog(blog);
+
+        const isLike = blog.likes.includes(authUser.uid);
+        setIsLike(isLike);
         setCount(blog.likes.length);
       })();
     }
@@ -58,9 +61,15 @@ export default function Blog() {
       />
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
-      <p>いいね:{count}</p>
 
-      <button onClick={likeHandler}>❤️</button>
+      <button
+        onClick={likeHandler}
+        disabled={isLike}
+        className="flex items-center gap-2"
+      >
+        <LikeIcon isLike={isLike} />
+      </button>
+      {count}
     </div>
   );
 }
