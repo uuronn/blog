@@ -23,19 +23,18 @@ export default function Home() {
     const name = res.user.displayName || '';
     const email = res.user.email || '';
 
+    const token = await res.user.getIdToken();
+
     await fetch(`${BASE_URL}/users`, {
-      method: 'POST',
       headers: {
-        Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
-        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
       },
-      body: JSON.stringify({ userId, name, email } as User),
     });
   };
 
   return (
     <>
-      <Header breadcrumbList={[{ title: 'いっせいブログ', path: '' }]} />
+      <Header breadcrumbList={[{ title: 'いっせいブログ', path: '/' }]} />
       <main className="p-6">
         <button onClick={onClick}>認証</button>
       </main>

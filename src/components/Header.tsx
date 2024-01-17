@@ -1,10 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 type Props = {
   breadcrumbList: { title: string; path: string }[];
+  isOwner?: boolean;
 };
 
-export const Header = ({ breadcrumbList }: Props) => {
+export const Header = ({ breadcrumbList, isOwner }: Props) => {
   return (
     <header className="z-10 flex w-screen justify-between border-b-2 border-black bg-white px-6 py-3">
       <ul className="flex">
@@ -14,12 +15,12 @@ export const Header = ({ breadcrumbList }: Props) => {
               {breadcrumb.title}
             </Link>
             {i < breadcrumbList.length - 1 && (
-              <span className="mx-2 text-xl font-normal">{">"}</span>
+              <span className="mx-2 text-xl font-normal">{'>'}</span>
             )}
           </li>
         ))}
       </ul>
-      <Link href="/create">記事作成</Link>
+      {isOwner && <Link href="/create">記事作成</Link>}
     </header>
   );
 };

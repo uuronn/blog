@@ -7,80 +7,58 @@ import { BlogCard } from './components/BlogCard';
 import { AuthContext } from '~/contexts/AuthContext';
 import { BASE_URL } from '~/constant';
 import { Blog } from '~/constant/types';
+import { getIdToken } from 'firebase/auth';
 
 export default function Home() {
   const [blogs, setBlogs] = useState<Blog[]>();
   const { authUser, isLoad } = useContext(AuthContext);
 
-  const [user, setUser] = useState();
-
   useEffect(() => {
     if (authUser) {
-      console.log('authUser', authUser.uid);
-
-      const userId = authUser.uid;
-
-      console.log('userId', userId);
+      (async () => {
+        const idToken = await getIdToken(authUser);
+      })();
 
       (async () => {
-        const res = await fetch(`${BASE_URL}/users?userId=${userId}`, {
+        const idToken = await getIdToken(authUser);
+        const res = await fetch(`${BASE_URL}/blogs`, {
           headers: {
-            Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
+            Authorization: 'Bearer ' + idToken,
           },
         });
+        const blogs = await res.json();
 
-        const user = await res.json();
-
-        setUser(user);
+        setBlogs(blogs);
       })();
     }
-
-    // token取得できる---
-    // if (user) {
-    //   (async () => {
-    //     const idToken = await getIdToken(user, true);
-    //     console.log('istoken', idToken);
-    //   })();
-    // }
   }, [authUser]);
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`${BASE_URL}/blogs`, {
-        headers: {
-          Authorization: process.env.NEXT_PUBLIC_AUTHORIZATION_KEY as string,
-        },
-      });
-      const blogs = await res.json();
-      setBlogs(blogs);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      console.log('aaaa', user);
-    }
-  }, [user]);
-
-  if (!isLoad)
+  if (authUser === null)
     return (
-      <main>
+      <>
         <Header breadcrumbList={[{ title: 'いっせいブログ', path: '' }]} />
-        <div>...loading</div>
-      </main>
+        <main>
+          <div>ログインしてください。</div>
+        </main>
+      </>
     );
 
   if (!blogs)
     return (
-      <main>
+      <>
         <Header breadcrumbList={[{ title: 'いっせいブログ', path: '' }]} />
-        <div>...loading</div>
-      </main>
+        <main>
+          <div>...loading</div>
+        </main>
+      </>
     );
 
   return (
     <>
-      <Header breadcrumbList={[{ title: 'いっせいブログ', path: '' }]} />
+      <Header
+        breadcrumbList={[{ title: 'いっせいブログ', path: '' }]}
+        isOwner={authUser?.email === process.env.NEXT_PUBLIC_OWNER_EMAIL}
+      />
       <main className="p-6">
         <p>{authUser?.displayName}</p>
         <ul className="flex flex-wrap justify-center gap-3">

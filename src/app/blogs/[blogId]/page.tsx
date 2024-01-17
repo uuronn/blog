@@ -16,12 +16,9 @@ export default function Blog() {
   const count = useFetchLikesCount(router.blogId as string);
 
   const likeHandler = () => {
-    console.log('authuser', authUser);
-
     if (!authUser) return;
 
     const userId = authUser.uid;
-    // setBlog((prev) => console.log('prev', prev));
   };
 
   useEffect(() => {
