@@ -5,7 +5,9 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { auth } from '~/firebase/app';
 import { BASE_URL } from '~/constant';
-import { User } from '~/constant/types';
+import { useContext } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export type Blog = {
   id: string;
@@ -14,6 +16,8 @@ export type Blog = {
 };
 
 export default function Home() {
+  const { authUser, isLoad } = useContext(AuthContext);
+  const router = useRouter();
   const provider = new GoogleAuthProvider();
 
   const onClick = async () => {
@@ -31,6 +35,8 @@ export default function Home() {
       },
     });
   };
+
+  if (authUser) router.push('/');
 
   return (
     <>
