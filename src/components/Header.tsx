@@ -1,7 +1,8 @@
+import { Route } from 'next';
 import Link from 'next/link';
 
 type Props = {
-  breadcrumbList: { title: string; path: string }[];
+  breadcrumbList: { title: string; path?: Route }[];
   isOwner?: boolean;
 };
 
@@ -11,9 +12,14 @@ export const Header = ({ breadcrumbList, isOwner }: Props) => {
       <ul className="flex">
         {breadcrumbList.map((breadcrumb, i) => (
           <li className="text-lg text-black" key={i}>
-            <Link href={breadcrumb.path} className="text-lg font-bold">
-              {breadcrumb.title}
-            </Link>
+            {breadcrumb.path ? (
+              <Link href={breadcrumb.path} className="text-lg font-bold">
+                {breadcrumb.title}
+              </Link>
+            ) : (
+              <p className="text-lg font-bold">{breadcrumb.title}</p>
+            )}
+
             {i < breadcrumbList.length - 1 && (
               <span className="mx-2 text-xl font-normal">{'>'}</span>
             )}
