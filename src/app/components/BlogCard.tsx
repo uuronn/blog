@@ -18,7 +18,7 @@ export const BlogCard = ({ blog, className }: Props) => {
       <p className="mb-2 text-lg font-bold">{blog.title}</p>
       <p>{blog.content}</p>
       <p className="absolute bottom-[16px] right-[16px] flex items-center gap-2">
-        {blog.likes.length}
+        {/* {blog.likes.length} */}
         <LikeIcon />
       </p>
     </div>
