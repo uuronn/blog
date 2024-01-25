@@ -1,34 +1,28 @@
 'use client';
 
-import { FormEventHandler, useContext } from 'react';
+import { FormEventHandler } from 'react';
 import { Button } from '~/app/components/Button';
-import { AuthContext } from '~/contexts/AuthContext';
+import { BASE_URL } from '~/constant';
 
 export const CreateForm = () => {
-  const { authUser, isLoad } = useContext(AuthContext);
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+
     const form = new FormData(e.currentTarget);
+
     const title = form.get('title') || '';
     const content = form.get('content') || '';
 
-    console.log('title', title);
-    console.log('content', content);
-
-    // const token = await authUser?.getIdToken();
-
-    // fetch(`${BASE_URL}/blogs`, {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: 'Bearer ' + token,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     title,
-    //     content,
-    //   } as Blog),
-    // });
+    fetch(`${BASE_URL}/blog`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        content,
+      }),
+    });
   };
 
   return (
