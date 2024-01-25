@@ -29,8 +29,7 @@ export default function IndexPage() {
           {blogs ? (
             blogs.map((blog) => (
               <li key={blog.id}>
-                <Link href={`/blogs/${blog.id}`}>
-                  <p>{blog.title}</p>
+                <Link href={`/${blog.id}`}>
                   <BlogCard blog={blog} />
                 </Link>
               </li>
@@ -39,7 +38,6 @@ export default function IndexPage() {
             <div>loading...</div>
           )}
         </ul>
-        <button>追加</button>
       </main>
     </>
   );
