@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '~/components/Header';
 import { BASE_URL } from '~/constant';
 import { Blog } from '~/constant/types';
-import { BlogCard } from './components/BlogCard';
+import { BlogCard } from './_components/BlogCard';
 
 export default function IndexPage() {
   const [blogs, setBlogs] = useState<Blog[]>();
