@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { LikeIcon } from '~/components/icons/LikeIcon';
 import { BASE_URL } from '~/constant';
 import { Blog } from '~/constant/types';
+import { formatDate } from '~/utils/formatDate';
 
 export const BlogDetail = () => {
   const { blogId } = useParams();
@@ -24,17 +25,11 @@ export const BlogDetail = () => {
 
   if (!blog) return <div>loading...</div>;
 
-  const date = new Date(blog.createdAt);
-
-  const dateText = `${date.getFullYear()}年${
-    date.getMonth() + 1
-  }月${date.getDate()}日`;
-
   return (
     <>
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
-      <p>投稿日 {dateText}</p>
+      <p>投稿日 {formatDate(blog.createdAt)}</p>
       <button className="flex items-center gap-2">
         <LikeIcon />
       </button>
