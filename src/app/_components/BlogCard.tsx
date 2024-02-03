@@ -1,26 +1,31 @@
-import classNames from 'classnames';
-import { ComponentPropsWithoutRef } from 'react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+} from '@material-tailwind/react';
 import { LikeIcon } from '~/components/icons/LikeIcon';
 import { Blog } from '~/constant/types';
+import { formatDate } from '~/utils/formatDate';
 
 type Props = {
   blog: Blog;
-} & ComponentPropsWithoutRef<'div'>;
+};
 
-export const BlogCard = ({ blog, className }: Props) => {
+export const BlogCard = ({ blog }: Props) => {
   return (
-    <div
-      className={classNames(
-        'relative h-32 w-96 rounded-2xl border-2 border-black p-4',
-        className,
-      )}
-    >
-      <p className="mb-2 text-lg font-bold">{blog.title}</p>
-      <p>{blog.content}</p>
-      <p className="absolute bottom-[16px] right-[16px] flex items-center gap-2">
-        {/* {blog.likes.length} */}
+    <Card className="mt-6 w-96">
+      <CardBody>
+        <Typography variant="h5" color="blue-gray" className="mb-2">
+          {blog.title}
+        </Typography>
+        <Typography>{blog.content}</Typography>
+      </CardBody>
+      <CardFooter className="pt-0">
+        <Typography>{formatDate(blog.createdAt)}</Typography>
         <LikeIcon />
-      </p>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
