@@ -1,29 +1,19 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 import { LikeIcon } from '~/components/icons/LikeIcon';
-import { BASE_URL } from '~/constant';
-import { Blog } from '~/constant/types';
+
 import { formatDate } from '~/utils/formatDate';
+import { useFetchBlog } from '../hooks/useFetchBlog';
 
 export const BlogDetail = () => {
-  const { blogId } = useParams();
+  const { blogId } = useParams<{ [key: string]: string }>();
+  const { blog, isLoading } = useFetchBlog(blogId);
 
-  const [blog, setBlog] = useState<Blog>();
+  if (isLoading) return <div>loading...</div>;
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`${BASE_URL}/blog/${blogId}`);
-
-      const blog = await res.json();
-
-      setBlog(blog);
-    })();
-  }, []);
-
-  if (!blog) return <div>loading...</div>;
+  if (!blog) return <div>blog is not undefined</div>;
 
   return (
     <>

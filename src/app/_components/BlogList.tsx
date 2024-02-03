@@ -1,37 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { BASE_URL } from '~/constant';
-import { Blog } from '~/constant/types';
 import { BlogCard } from './BlogCard';
+import { useFetchBlogList } from '../[blogId]/hooks/useFetchBlogList';
 
 export const BlogList = () => {
-  const [blogs, setBlogs] = useState<Blog[]>();
+  const { blogList, isLoading } = useFetchBlogList();
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(`${BASE_URL}/blog`);
+  if (isLoading) return <div>loading...</div>;
 
-      const blogs = await res.json();
-
-      setBlogs(blogs);
-    })();
-  }, []);
+  if (!blogList) return <div>blogList is not undefined</div>;
 
   return (
     <ul className="flex flex-wrap justify-center gap-3">
-      {blogs ? (
-        blogs.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/${blog.id}`}>
-              <BlogCard blog={blog} />
-            </Link>
-          </li>
-        ))
-      ) : (
-        <div>loading...</div>
-      )}
+      {blogList.map((blog) => (
+        <li key={blog.id}>
+          <Link href={`/${blog.id}`}>
+            <BlogCard blog={blog} />
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };
