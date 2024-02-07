@@ -1,7 +1,7 @@
 'use client';
 
+import { Button } from '@material-tailwind/react';
 import { FormEventHandler } from 'react';
-import { Button } from '~/app/_components/Button';
 import { BASE_URL } from '~/constant';
 
 export const CreateForm = () => {
