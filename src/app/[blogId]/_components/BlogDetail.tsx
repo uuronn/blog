@@ -16,13 +16,13 @@ export const BlogDetail = () => {
   if (!blog) return <div>blog is not undefined</div>;
 
   return (
-    <>
-      <h1>{blog.title}</h1>
+    <div className="flex flex-col gap-4 px-4 py-8 text-lg md:px-52">
+      <h1 className="text-3xl font-bold">{blog.title}</h1>
+      <p className="text-right">投稿日 {formatDate(blog.createdAt)}</p>
       <p>{blog.content}</p>
-      <p>投稿日 {formatDate(blog.createdAt)}</p>
       <button className="flex items-center gap-2">
         <LikeIcon />
       </button>
-    </>
+    </div>
   );
 };

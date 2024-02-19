@@ -36,7 +36,7 @@ export const CreateForm = () => {
         <textarea name="content" rows={8} className="w-full rounded border-2" />
       </label>
       <div className="m-auto flex gap-6">
-        <Button>送信</Button>
+        <Button type="submit">送信</Button>
         <Button>下書き保存</Button>
       </div>
     </form>

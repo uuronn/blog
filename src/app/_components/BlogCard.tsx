@@ -19,7 +19,7 @@ export const BlogCard = ({ blog }: Props) => {
         <Typography variant="h5" color="blue-gray" className="mb-2">
           {blog.title}
         </Typography>
-        <Typography>{blog.content}</Typography>
+        <Typography className="truncate">{blog.content}</Typography>
       </CardBody>
       <CardFooter className="pt-0">
         <Typography>{formatDate(blog.createdAt)}</Typography>
